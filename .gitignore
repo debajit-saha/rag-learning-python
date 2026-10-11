@@ -1,0 +1,20 @@
+
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local development
+.vscode/
+.idea/
+.pytest_cache/
+
+# Generated data and logs
+*.log
+.DS_Store
