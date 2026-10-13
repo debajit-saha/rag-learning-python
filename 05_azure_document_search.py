@@ -25,6 +25,13 @@ from azure.search.documents.indexes.models import (
 )
 from azure.search.documents.models import VectorizedQuery
 
+from azure.search.documents.indexes.models import (
+    SemanticConfiguration,
+    SemanticField,
+    SemanticPrioritizedFields,
+    SemanticSearch,
+)
+
 
 load_dotenv()
 
@@ -195,10 +202,24 @@ def create_search_index():
         ],
     )
 
+    semantic_config = SemanticConfiguration(
+        name="handbook-semantic-config",
+        prioritized_fields=SemanticPrioritizedFields(
+            content_fields=[
+                SemanticField(field_name="content")
+            ]
+        ),
+    )
+
+    semantic_search = SemanticSearch(
+        configurations=[semantic_config]
+    )
+
     index = SearchIndex(
         name=INDEX_NAME,
         fields=fields,
         vector_search=vector_search,
+        semantic_search=semantic_search,
     )
 
     index_client.create_or_update_index(index)
@@ -277,7 +298,10 @@ def search_documents(question):
     results = search_client.search(
         search_text=question,
         vector_queries=[vector_query],
+        query_type="semantic",
+        semantic_configuration_name="handbook-semantic-config",
         top=TOP_K,
+        filter="file_name eq 'employee_handbook.pdf'",
         select=[
             "file_name",
             "page_number",
@@ -286,12 +310,39 @@ def search_documents(question):
         ],
     )
 
+    sources = []
+
     for rank, result in enumerate(results, start=1):
+        reranker_score = result.get("@search.reranker_score")
+
+        if reranker_score is not None and reranker_score < 2.0:
+            print(
+                f"Potentially irrelevant result "
+                f"(semantic score: {reranker_score:.4f})"
+            )
+            return
+
+        source = {
+            "rank": rank,
+            "file_name": result["file_name"],
+            "page_number": result["page_number"],
+            "chunk_number": result["chunk_number"],
+            "content": result["content"],
+            "search_score": result["@search.score"],
+            "semantic_score": reranker_score
+        }
+
+        sources.append(source)
+
         print(f"\n--- Result {rank} ---")
-        print(f"File: {result['file_name']}")
-        print(f"Page: {result['page_number']}")
-        print(f"Content: {result['content']}")
-        print(f"Search score: {result['@search.score']:.4f}")
+        print(f"Source: {source['file_name']}, "
+              f"Page {source['page_number']}")
+        print(f"Chunk: {source['chunk_number']}")
+        print(f"Content: {source['content']}")
+        print(f"Search score: {source['search_score']:.4f}")
+        print(f"Semantic score: {reranker_score:.4f}")
+
+    return sources
 
 
 # --------------------------------
