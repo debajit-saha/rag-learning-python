@@ -77,3 +77,28 @@ button:disabled {
 .message.assistant {
   background: #f3f4f6;
 }
+
+.citations {
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid #ddd;
+  font-size: 0.9em;
+}
+
+.citations ol {
+  margin: 6px 0 0;
+  padding-left: 24px;
+}
+
+.citations li {
+  margin-bottom: 6px;
+}
+
+.citations a {
+  color: #2563eb;
+}
+
+.citations p {
+  margin: 2px 0 0;
+  color: #555;
+}

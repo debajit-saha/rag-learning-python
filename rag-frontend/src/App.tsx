@@ -1,11 +1,38 @@
-
 import { useState } from "react";
 import "./App.css";
+
+type RetrievedImage = {
+  name: string;
+  description: string;
+  page: number;
+  url: string;
+  relevance_score?: number;
+};
+
+type Citation = {
+  number: number;
+  file_name: string;
+  page: number;
+  chunk: number;
+  snippet: string;
+  url: string;
+};
 
 type Message = {
   role: "user" | "assistant";
   content: string;
+  images?: RetrievedImage[];
+  citations?: Citation[];
 };
+
+type AskResponse = {
+  answer: string;
+  conversation_id: string | null;
+  images?: RetrievedImage[];
+  citations?: Citation[];
+};
+
+const API_BASE_URL = "http://127.0.0.1:8000";
 
 function App() {
   const [question, setQuestion] = useState("");
@@ -23,31 +50,37 @@ function App() {
       ...previous,
       { role: "user", content: currentQuestion },
     ]);
+
     setQuestion("");
     setLoading(true);
     setError("");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/ask", {
+      const response = await fetch(`${API_BASE_URL}/ask`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: currentQuestion, conversation_id: conversationId, }),
+        body: JSON.stringify({
+          question: currentQuestion,
+          conversation_id: conversationId,
+        }),
       });
 
       if (!response.ok) {
         throw new Error(`Request failed with status ${response.status}`);
       }
 
-      const data: {
-        answer: string;
-        conversation_id: string;
-      } = await response.json();
+      const data: AskResponse = await response.json();
 
       setConversationId(data.conversation_id);
 
       setMessages((previous) => [
         ...previous,
-        { role: "assistant", content: data.answer },
+        {
+          role: "assistant",
+          content: data.answer,
+          images: data.images ?? [],
+          citations: data.citations ?? [],
+        },
       ]);
     } catch (err) {
       setError(
@@ -74,11 +107,61 @@ function App() {
             <strong>
               {message.role === "user" ? "You" : "Assistant"}
             </strong>
-            <p>{message.content}</p>
+
+            <p className="message-content">{message.content}</p>
+
+            {message.role === "assistant" &&
+              message.images &&
+              message.images.length > 0 && (
+                <div className="retrieved-images">
+                  {message.images.map((image) => (
+                    <figure
+                      key={`${image.name}-${image.page}`}
+                      className="retrieved-image"
+                    >
+                      <img
+                        src={`${API_BASE_URL}${image.url}`}
+                        alt={image.description}
+                        loading="lazy"
+                      />
+
+                      <figcaption>
+                        <strong>{image.name}</strong>
+                        <p>{image.description}</p>
+                        <span>Page {image.page}</span>
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              )}
+
+            {message.role === "assistant" &&
+              message.citations &&
+              message.citations.length > 0 && (
+                <div className="citations">
+                  <strong>Sources</strong>
+                  <ol>
+                    {message.citations.map((citation) => (
+                      <li key={citation.number} value={citation.number}>
+                        <a
+                          href={`${API_BASE_URL}${citation.url}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {citation.file_name}, page {citation.page}
+                        </a>
+                        <p>{citation.snippet}</p>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
           </div>
         ))}
 
-        {loading && <p className="status">Assistant is thinking...</p>}
+        {loading && (
+          <p className="status">Assistant is thinking...</p>
+        )}
       </section>
 
       {error && <p className="error">{error}</p>}
@@ -97,7 +180,10 @@ function App() {
           disabled={loading}
         />
 
-        <button type="submit" disabled={loading || !question.trim()}>
+        <button
+          type="submit"
+          disabled={loading || !question.trim()}
+        >
           {loading ? "Thinking..." : "Send"}
         </button>
       </form>

@@ -1,0 +1,27 @@
+[
+  {
+    "image_name": "page_3_image_1.png",
+    "sha256": "3254f8b9ea82ab6c206d29e4f9d9e13de16fac0d87d9f02ff82478df184c31f4",
+    "description": "This image shows a user interface of a \"Leave Portal\" system. It has a navigation menu on the left-hand side with the following options:  \n\n- \"Home\"  \n- \"My Leave\" (highlighted as the current selection)  \n- \"Request Leave\"  \n- \"Leave History\"\n\nThe main section of the screen is titled \"Annual Leave\" and displays a circular progress graphic. It states:  \n- \"12 days remaining of 20 days\"  \n\nBelow that, there is a large blue button labeled \"Request Leave.\"  \n\nThis image could be found using questions like:  \n- \"What does a leave management portal interface look like?\"  \n- \"How can I check remaining leave balance in a portal?\"  \n- \"Sample leave request screen in an HR system.\"  "
+  },
+  {
+    "image_name": "page_3_image_2.png",
+    "sha256": "d244de0a636e83534bce51cfd414efa99d5ef38e3e907ef3ac7407abc3d5dbf9",
+    "description": "This image shows a woman participating in a video conference on her laptop. The laptop screen displays a grid view of six people in a virtual meeting. The scene is set in a home office, featuring a desk with a small potted plant, a notebook, and a pen on it. There are additional plants and shelves in the blurred background. The woman is typing on the keyboard and is seated with her back partially visible to the viewer. \n\nSearchable queries might include:  \n- \"Person on video call working from home\"  \n- \"Virtual meeting on laptop in a home office\"  \n- \"Home office setup with a woman on a video conference\"  \n- \"Online meeting with six participants shown on a screen\"  \n- \"Remote work setup with video conferencing\"  "
+  },
+  {
+    "image_name": "page_4_image_1.png",
+    "sha256": "dee2a4b647f1a2daef35d6623867713607fa53ca599badf48469d8d5007904b0",
+    "description": "This image is a flowchart describing a \"Travel and Expense Approval Process.\" It includes five steps with icons representing each stage:\n\n1. **Submit Travel Request**: Represented by an airplane icon. Includes text: \"Include business purpose and dates.\"\n2. **Manager Approval**: Represented by a person icon. Includes text: \"Review and approve request.\"\n3. **Book Travel**: Represented by a ticket icon. Includes text: \"Use approved booking channels.\"\n4. **Submit Expense Claim**: Represented by a receipt icon. Includes text: \"Attach itemized receipts.\"\n5. **Finance Review**: Represented by a checkmark icon. Includes text: \"Reimbursement processed.\"\n\nThe flowchart is organized vertically with arrows connecting the steps. Key context phrases in the image include \"Travel and Expense Approval Process,\" \"reimbursement,\" and \"business purpose.\""
+  },
+  {
+    "image_name": "page_4_image_2.png",
+    "sha256": "5b6a1549a474e27a50280739406b1d36f7a969bff0339a24f29898688014dafd",
+    "description": "This image shows a close-up of a document labeled \"Health Insurance\" at the top, with a form below it. A stethoscope is placed on the document, suggesting a connection to healthcare or medical insurance. The focus is on health-related paperwork and insurance forms."
+  },
+  {
+    "image_name": "page_4_image_3.png",
+    "sha256": "f1c8a95b6af49bddecac07702e2b92632788631d7611dcab4847377cb6891f71",
+    "description": "This image shows a laptop displaying an online learning and development platform. The screen is divided into two main sections:\n\n1. **Sidebar Navigation Menu:** Visible on the left side, featuring menu options:\n   - Home\n   - My Learning\n   - Browse Course\n   - Certifications\n   - Learning Plan\n\n2. **Main Content Area:** Displays a \"Recommended for You\" section with three course recommendations:\n   - **Python for Beginners** (represented by a blue coding icon): Includes a \"Start\" button below the course name.\n   - **Azure Fundamentals** (represented by a blue cloud icon): Includes a \"Start\" button below the course name.\n   - **Leadership Skills** (represented by a bar chart icon): Includes a \"Start\" button below the course name.\n\nThe platform header is titled \"Learning & Development\" in a blue banner at the top of the screen. The laptop is placed on a wooden surface with a blurred background showing some greenery. \n\nSomeone might search for \"online learning dashboard with Python, Azure, and leadership courses.\""
+  }
+]

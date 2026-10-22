@@ -1,0 +1,6 @@
+{
+  "pdf_sha256": "16265f9d6dc7ff56d2ccda48e18d53f7b81ec84c5cd55b943935c734d7030a6c",
+  "text_index": "employee-handbook-index",
+  "image_index": "employee-handbook-images-index",
+  "embedding_deployment": "text-embedding-3-large"
+}
